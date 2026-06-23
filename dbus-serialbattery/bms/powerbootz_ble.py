@@ -83,10 +83,7 @@ class Powerbootz_Ble(Battery):
             exception_type, exception_object, exception_traceback = sys.exc_info()
             file = exception_traceback.tb_frame.f_code.co_filename
             line = exception_traceback.tb_lineno
-            logger.error(
-                f"Powerbootz_Ble: test_connection exception: {repr(exception_object)} "
-                f"of type {exception_type} in {file} line #{line}"
-            )
+            logger.error(f"Powerbootz_Ble: test_connection exception: {repr(exception_object)} " f"of type {exception_type} in {file} line #{line}")
         return result
 
     def unique_identifier(self) -> str:
@@ -116,10 +113,7 @@ class Powerbootz_Ble(Battery):
             exception_type, exception_object, exception_traceback = sys.exc_info()
             file = exception_traceback.tb_frame.f_code.co_filename
             line = exception_traceback.tb_lineno
-            logger.error(
-                f"Powerbootz_Ble: refresh_data exception: {repr(exception_object)} "
-                f"of type {exception_type} in {file} line #{line}"
-            )
+            logger.error(f"Powerbootz_Ble: refresh_data exception: {repr(exception_object)} " f"of type {exception_type} in {file} line #{line}")
             return False
 
     # ── Async helpers ─────────────────────────────────────────────────────────
@@ -226,26 +220,17 @@ class Powerbootz_Ble(Battery):
             return None
 
         if len(frame) != FRAME_BINARY_LEN:
-            logger.error(
-                f"Powerbootz_Ble: unexpected frame length {len(frame)}, "
-                f"expected {FRAME_BINARY_LEN}"
-            )
+            logger.error(f"Powerbootz_Ble: unexpected frame length {len(frame)}, " f"expected {FRAME_BINARY_LEN}")
             return None
 
         # Checksum: CRC = sum(frame[0..115]) ^ 0xFF
         # Validation: sum(all 117 bytes) & 0xFF == 0xFF
         if (sum(frame) & 0xFF) != 0xFF:
-            logger.warning(
-                f"Powerbootz_Ble: checksum failed "
-                f"(sum mod 256 = 0x{sum(frame) & 0xFF:02X}, expected 0xFF)"
-            )
+            logger.warning(f"Powerbootz_Ble: checksum failed " f"(sum mod 256 = 0x{sum(frame) & 0xFF:02X}, expected 0xFF)")
             return None
 
         if frame[1] != EXPECTED_CMD_BYTE:
-            logger.error(
-                f"Powerbootz_Ble: unexpected cmd byte 0x{frame[1]:02X}, "
-                f"expected 0x{EXPECTED_CMD_BYTE:02X}"
-            )
+            logger.error(f"Powerbootz_Ble: unexpected cmd byte 0x{frame[1]:02X}, " f"expected 0x{EXPECTED_CMD_BYTE:02X}")
             return None
 
         return frame
@@ -382,8 +367,5 @@ class Powerbootz_Ble(Battery):
             exception_type, exception_object, exception_traceback = sys.exc_info()
             file = exception_traceback.tb_frame.f_code.co_filename
             line = exception_traceback.tb_lineno
-            logger.error(
-                f"Powerbootz_Ble: _parse_frame exception: {repr(exception_object)} "
-                f"of type {exception_type} in {file} line #{line}"
-            )
+            logger.error(f"Powerbootz_Ble: _parse_frame exception: {repr(exception_object)} " f"of type {exception_type} in {file} line #{line}")
             return False
